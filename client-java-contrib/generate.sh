@@ -48,9 +48,10 @@ kind create cluster
 # install CRDs to the KinD cluster and dump the swagger spec
 for url in "${CRD_URLS[@]}"; do
   if [[ ! -z $url ]]; then
+    echo "start!!!"
     #kubectl create -f "$url"
-    kubectl replace -f "$url"
-    #kubectl apply --server-side --force-conflicts -f "$url"
+    #kubectl replace -f "$url"
+    kubectl apply --server-side --force-conflicts -f "$url"
   fi
 done
 
