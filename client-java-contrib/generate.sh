@@ -45,19 +45,17 @@ set -e
 
 # create a KinD cluster on the host
 kind create cluster
-echo "@@@1"
 # install CRDs to the KinD cluster and dump the swagger spec
-echo "@@@2"
 for url in "${CRD_URLS[@]}"; do
   if [[ ! -z $url ]]; then
-    echo "@@@3"
-    kubectl create -f "$url"
+    #kubectl create -f "$url"
+    kubectl replace -f "$url"
+    #kubectl apply --server-side --force-conflicts -f "$url"
   fi
 done
 
 sleep 5
 kubectl get --raw="/openapi/v2" > /tmp/swagger
-echo "@@@4"
 echo "Verifying CRD installation.."
 kubectl get crd -o name \
   | while read L
